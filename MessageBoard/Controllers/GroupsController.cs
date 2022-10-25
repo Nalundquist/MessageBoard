@@ -21,7 +21,6 @@ namespace MessageBoard.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Group>>> GetGroups()
 		{
-			
 			return await _db.Groups.Include(g => g.Messages).ToListAsync();
 		}
 
@@ -41,7 +40,6 @@ namespace MessageBoard.Controllers
 			{
 				return NotFound();
 			}
-      // return await group.Messages.ToListAsync();
 			return await _db.Messages.Where(e => e.GroupId == id).ToListAsync();
 		}
 

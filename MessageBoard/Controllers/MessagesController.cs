@@ -20,9 +20,20 @@ namespace MessageBoard.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Message>>> Get()
+		public async Task<ActionResult<IEnumerable<Message>>> Get(string author, DateTime? startDate, DateTime? endDate)
 		{
-			return await _db.Messages.ToListAsync();
+			IQueryable<Message> query = _db.Messages.AsQueryable();
+
+			if (author != null)
+			{
+				query = query.Where(m => m.Author == author);
+			}
+
+			if (startDate != null && endDate != null)
+			{
+				query = query.Where(m => m.Date >= startDate).Where(m => m.Date <= endDate);
+			}
+			return await query.ToListAsync();
 		}
 
 		[HttpPost]
