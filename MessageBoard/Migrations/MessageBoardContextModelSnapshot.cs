@@ -61,13 +61,11 @@ namespace MessageBoard.Migrations
 
             modelBuilder.Entity("MessageBoard.Models.Message", b =>
                 {
-                    b.HasOne("MessageBoard.Models.Group", "Group")
+                    b.HasOne("MessageBoard.Models.Group", null)
                         .WithMany("Messages")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("MessageBoard.Models.Group", b =>

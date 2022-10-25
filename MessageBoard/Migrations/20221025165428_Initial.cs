@@ -31,7 +31,7 @@ namespace MessageBoard.Migrations
                     Body = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Author = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    GroupId = table.Column<int>(type: "int", nullable: true)
+                    GroupId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,7 +41,7 @@ namespace MessageBoard.Migrations
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "GroupId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

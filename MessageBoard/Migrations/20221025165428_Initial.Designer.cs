@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MessageBoard.Migrations
 {
     [DbContext(typeof(MessageBoardContext))]
-    [Migration("20221024183003_AddGroupId")]
-    partial class AddGroupId
+    [Migration("20221025165428_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,13 +63,11 @@ namespace MessageBoard.Migrations
 
             modelBuilder.Entity("MessageBoard.Models.Message", b =>
                 {
-                    b.HasOne("MessageBoard.Models.Group", "Group")
+                    b.HasOne("MessageBoard.Models.Group", null)
                         .WithMany("Messages")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("MessageBoard.Models.Group", b =>
