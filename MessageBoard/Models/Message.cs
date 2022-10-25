@@ -12,6 +12,6 @@ namespace MessageBoard.Models
     public DateTime Date { get; set; }
     public string Author { get; set; }
     public int GroupId { get; set; }
-		public virtual Group Group {get; set;}
+		// public Group Group { get; set; }
 	}
 }

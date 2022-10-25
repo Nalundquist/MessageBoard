@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MessageBoard.Models;
 using System.Linq;
+using System;
 
 namespace MessageBoard.Controllers
 {
@@ -27,9 +28,12 @@ namespace MessageBoard.Controllers
 		[HttpPost]
 		public async Task<ActionResult<Message>> Post(Message message)
 		{
+			// Group group = _db.Groups.FirstOrDefault(g => g.GroupId == message.GroupId);
+			// message.Group = group;
+			message.Date = DateTime.Now;
 			_db.Messages.Add(message);
 			await _db.SaveChangesAsync();
-			return CreatedAtAction("Post", new {id = message.MessageId }, message);
+			return CreatedAtAction("Post", new {id = message.MessageId}, message);
 		}
 
 		[HttpGet("{id}")]

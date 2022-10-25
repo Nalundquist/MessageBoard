@@ -21,7 +21,8 @@ namespace MessageBoard.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Group>>> GetGroups()
 		{
-			return await _db.Groups.ToListAsync();
+			
+			return await _db.Groups.Include(g => g.Messages).ToListAsync();
 		}
 
 		[HttpPost]
@@ -29,19 +30,19 @@ namespace MessageBoard.Controllers
 		{
 			_db.Groups.Add(group);
 			await _db.SaveChangesAsync();
-			return CreatedAtAction("Post", new {id = group.GroupId }, group);
+			return CreatedAtAction("Post", new {id = group.GroupId}, group);
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Message>> GetGroupMessages(int id)
+		public async Task<ActionResult<IEnumerable<Message>>> GetGroupMessages(int id)
 		{
-      Group group = await _db.Groups.FindByAsync(id);
+      Group group = await _db.Groups.FindAsync(id);
 			if (group == null)
 			{
 				return NotFound();
 			}
-      return await group.Messages.ToList();
-			// return await _db.Messages.Where(e => e.Groupid == id).ToList()
+      // return await group.Messages.ToListAsync();
+			return await _db.Messages.Where(e => e.GroupId == id).ToListAsync();
 		}
 
 		[HttpPut("{id}")]
