@@ -1,5 +1,8 @@
 using System; 
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MessageBoard.Models
 {
@@ -13,5 +16,17 @@ namespace MessageBoard.Models
     public string Author { get; set; }
     public int GroupId { get; set; }
 		// public Group Group { get; set; }
-	}
+	
+
+    public static List<Message> GetMessages()
+    {
+      var apiCallTask = ApiHelper.GetAll();
+      var result = apiCallTask.Result;
+
+      JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
+      List<Message> messageList = JsonConvert.DeserializeObject<List<Message>>(jsonResponse.ToString());
+
+      return messageList;
+    }
+  }
 }
